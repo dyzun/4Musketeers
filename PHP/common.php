@@ -12,7 +12,6 @@ $dbh = new PDO('mysql:host=localhost:3306;dbname=mydb', $user, $pass);
 //$dbh = new PDO('mysql:host=localhost:8889;dbname=kevinBacon', 'root', 'root');
 
 
-
 function printDirectors($sqlQuery) {
 
     $index = 0; //Counting index for our table
@@ -28,8 +27,9 @@ function printDirectors($sqlQuery) {
         echo "</td></tr>";
         $index++;
     }
-}
     $dbh = null; //terminate connection to database.
+}
+
 
 //Commented for now. Uncomment later once you implement logic to check if we need
 //to fire this query.

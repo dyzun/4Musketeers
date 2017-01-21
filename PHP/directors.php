@@ -29,8 +29,6 @@
                 $sql.= " ORDER BY directors.first_name, directors.last_name";
 
                 printDirectors($sql);
-
-
             ?>
         </table>
 
