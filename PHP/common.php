@@ -17,17 +17,22 @@ function printDirectors($sqlQuery) {
     $index = 0; //Counting index for our table
     global $dbh; //this is how we refer to our global $dbh up top.
 
-    foreach ($dbh->query($sqlQuery) as $result) {
-        echo "<tr><td class=\"index\">";
-        echo $index + 1 ."</td>";
-        echo "<td class=\"FirstName\">";
-        echo $result['first_name'] ."</td>";
-        echo "<td class=\"LastName\">";
-        echo $result['last_name'];
-        echo "</td></tr>";
-        $index++;
+    try {
+        foreach ($dbh->query($sqlQuery) as $result) {
+            echo "<tr><td class=\"index\">";
+            echo $index + 1 . "</td>";
+            echo "<td class=\"FirstName\">";
+            echo $result['first_name'] . "</td>";
+            echo "<td class=\"LastName\">";
+            echo $result['last_name'];
+            echo "</td></tr>";
+            $index++;
+        }
+        $dbh = null; //terminate connection to database.
+    } catch (PDOException $e) {
+        print  "Error!: " . $e->getMessage() . "<br/>";
+        die();
     }
-    $dbh = null; //terminate connection to database.
 }
 
 
