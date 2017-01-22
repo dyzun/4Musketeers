@@ -4,16 +4,19 @@
         <meta charset="UTF-8">
         <title>Actors Who Direct</title>
 
+        <!--bootstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
         <!--CSS File Link-->
-        <link href="../CSS/bacon.css" type="'text/css" rel="stylesheet /">
+        <link href="../CSS/bacon.css" type="text/css" rel="stylesheet /">
     </head>
 
 <body>
 
-    <div id="main">
+    <div id="directors">
         <h1>Actors Who Directed</h1>
 
-        <table>
+        <table class="table table-bordered table-condensed">
             <tr>
                 <td class="index">#</td>
                 <td class="FirstName">First Name</td>
