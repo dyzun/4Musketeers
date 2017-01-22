@@ -8,6 +8,10 @@
 
     switch($_POST['selection']):
         case '1deg':
+            $name = $_POST['fname'];
+            echo $name;
+            session_start();
+            $_SESSION['actorName'] = $name;
             header('Location:PHP/1degree.php');
             break;
         case '2deg':
