@@ -6,10 +6,10 @@
  * Time: 7:16 PM
  */
 
+$dsn = 'mysql:dbname=GIS;host=127.0.0.1';
 $user = 'root'; //Insert your username in here when testing.
-$pass = 'Jaljap2732!'; //Insert your password in here when testing.
-$dbh = new PDO('mysql:host=localhost:3306;dbname=mydb', $user, $pass);
-//$dbh = new PDO('mysql:host=localhost:8889;dbname=kevinBacon', 'root', 'root');
+$pass = 'password'; //Insert your password in here when testing.
+$dbh = new PDO($dsn, $user, $pass);
 
 
 function printDirectors($sqlQuery) {
@@ -35,7 +35,26 @@ function printDirectors($sqlQuery) {
     }
 }
 
+function printMovies($sqlQuery) {
 
+    $index = 0; //Counting index for our table
+    global $dbh; //this is how we refer to our global $dbh up top.
+
+    try {
+        foreach ($dbh->query($sqlQuery) as $result) {
+            echo "<tr><td class=\"index\">";
+            echo $index + 1 . "</td>";
+            echo "<td class=\"movie\">";
+            echo $result['name'] . "</td>";
+            echo "</td></tr>";
+            $index++;
+        }
+        $dbh = null; //terminate connection to database.
+    } catch (PDOException $e) {
+        print  "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+}
 //Commented for now. Uncomment later once you implement logic to check if we need
 //to fire this query.
 //$testForNull = "SELECT id
