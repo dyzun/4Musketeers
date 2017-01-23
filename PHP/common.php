@@ -6,11 +6,24 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:dbname=GIS;host=127.0.0.1';
+$dsn = 'mysql:host=localhost;dbname=GIS';
 $user = 'root'; //Insert your username in here when testing.
 $pass = 'password'; //Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
 
+function baconId(){
+    $baconsql = "SELECT id FROM actors WHERE first_name='Kevin' AND last_name='Bacon'";
+    try{
+        global $dbh;
+        foreach($dbh->query($baconsql)as $result){
+            $baconid = $result['id'];
+        }
+    } catch (PDOException $e) {
+        print  "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+    return $baconid;
+}
 
 function printDirectors($sqlQuery) {
 
