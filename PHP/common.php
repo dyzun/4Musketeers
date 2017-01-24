@@ -68,6 +68,44 @@ function printMovies($sqlQuery) {
         die();
     }
 }
+
+//q4 use for search queries
+function q4(){
+        global $dbh; //this is how we refer to our global $dbh up top.
+     $pieces = explode(" ", $_SESSION['actorName']);
+     $sql = "SELECT id FROM actors WHERE actors.last_name = ? AND actors.first_name = ?))";
+     $actor= "filler\n";
+     try {
+         $stm = $dbh->prepare($sql);
+         $stm ->execute(array($pieces[1],$pieces[0]));
+         while ($row = $stm->fetchColumn(0)) { //ERROR should assign id to $actor
+             echo $row;
+           $actor = $row;  
+        }
+        if($stm == false)//or  if(!$results)  or  if(count($results)==0)  or if($results == array())
+        {
+            $rest = substr($pieces[0], 0,1);
+            echo $rest;
+            $sql = "SELECT id FROM actors WHERE actors.last_name = ? AND actors.first_name LIKE %? Order by film_count DESC"; 
+            $stm = $dbh->prepare($sql);
+         $stm ->execute(array($pieces[1],$rest));
+        $res = $stm->fetchColumn();//ERROR should assign id to $actor
+            $actor = $res;
+            echo $actor;
+            echo "inner loop";
+        }else{
+            echo $actor;
+            echo "outerloop";
+            }
+        $dbh = null; //terminate connection to database.
+    } catch (PDOException $e) {
+        print  "Error!: " . $e->getMessage() . "<br/>";
+        die();
+    }
+                echo $actor;
+
+     return $actor;
+}
 //Commented for now. Uncomment later once you implement logic to check if we need
 //to fire this query.
 //$testForNull = "SELECT id
