@@ -41,16 +41,18 @@
 
                 $pieces = explode(" ", $_SESSION['actorName']);
 
+
                 echo $pieces[0];
                 echo $pieces[1];
                 $test= q4();
                 echo $test;
-                /*$sql = "SELECT DISTINCT movies.name FROM movies WHERE movies.id in";
+                $sql = "SELECT DISTINCT movies.name FROM movies WHERE movies.id in";
+
                 $sql .= "(Select roles.movie_id from roles where roles.actor_id = ";
                 $sql .= "(SELECT actors.id FROM actors WHERE actors.last_name = '$pieces[1]' AND actors.first_name = '$pieces[0]'))";
                 $sql .= " AND movies.id in (select roles.movie_id from roles WHERE roles.actor_id ="+$baconid+")";
 
-                printMovies($sql);*/
+                printMovies($sql);
             ?>
 </table>
 
