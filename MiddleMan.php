@@ -26,7 +26,7 @@
                 header('Location:index.php');
                 break;
         endswitch;
-    } else {
+   } else {
         echo "Selection not set!";
-    }
+      }
 ?>
