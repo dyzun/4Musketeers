@@ -6,9 +6,9 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:host=localhost;dbname=GIS';
+$dsn = 'mysql:host=localhost:3306;dbname=GIS';
 $user = 'root'; //Insert your username in here when testing.
-$pass = 'password'; //Insert your password in here when testing.
+$pass = 'password';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
 
 function baconId(){
