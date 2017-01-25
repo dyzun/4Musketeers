@@ -40,10 +40,8 @@
                 $baconid = baconId();//Bacon's id pulled from the table for use in queries
 
                 $pieces = explode(" ", $_SESSION['actorName']);
-
-                echo $pieces[0];
-                echo $pieces[1];
-                $test= q4();
+                
+                $test= q4($_SESSION['actorName']);
                 echo $test;
                 /*$sql = "SELECT DISTINCT movies.name FROM movies WHERE movies.id in";
                 $sql .= "(Select roles.movie_id from roles where roles.actor_id = ";
