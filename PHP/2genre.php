@@ -14,7 +14,8 @@ try {
     $sql .= 'GROUP BY MG.genre, roles.actor_id';
     $sql .= 'ORDER BY MovieCount DESC LIMIT 1';
  
-    $q = $pdo->query($sql); # somehow do a genre variable from user
+    $q = $pdo->prepare($sql); 
+    $q->execute([_GET['selection']]); # maybe this works? maybe should be $q->execute(_GET['selection']);
     $q->setFetchMode(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die("Could not connect to the database $dbname :" . $e->getMessage());
