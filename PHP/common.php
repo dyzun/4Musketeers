@@ -6,10 +6,12 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:host=localhost:3306;dbname=GIS';
+$dsn = 'mysql:host=localhost:3306;dbname=mydb';
 $user = 'root'; //Insert your username in here when testing.
-$pass = 'password';//Insert your password in here when testing.
+$pass = 'Jaljap2732!';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
+
+session_start();
 
 function baconId(){
     $baconsql = "SELECT id FROM actors WHERE first_name='Kevin' AND last_name='Bacon'";
@@ -71,41 +73,88 @@ function printMovies($sqlQuery) {
 
 //q4 use for search queries
 function q4(){
-        global $dbh; //this is how we refer to our global $dbh up top.
+     global $dbh; //this is how we refer to our global $dbh up top.
      $pieces = explode(" ", $_SESSION['actorName']);
      $sql = "SELECT id FROM actors WHERE actors.last_name = ? AND actors.first_name = ?))";
      $actor= "filler\n";
      try {
-         $stm = $dbh->prepare($sql);
-         $stm ->execute(array($pieces[1],$pieces[0]));
-         while ($row = $stm->fetchColumn(0)) { //ERROR should assign id to $actor
-             echo $row;
-           $actor = $row;  
-        }
-        if($stm == false)//or  if(!$results)  or  if(count($results)==0)  or if($results == array())
-        {
-            $rest = substr($pieces[0], 0,1);
-            echo $rest;
-            $sql = "SELECT id FROM actors WHERE actors.last_name = ? AND actors.first_name LIKE %? Order by film_count DESC"; 
-            $stm = $dbh->prepare($sql);
-         $stm ->execute(array($pieces[1],$rest));
-        $res = $stm->fetchColumn();//ERROR should assign id to $actor
-            $actor = $res;
-            echo $actor;
-            echo "inner loop";
-        }else{
-            echo $actor;
-            echo "outerloop";
-            }
-        $dbh = null; //terminate connection to database.
-    } catch (PDOException $e) {
-        print  "Error!: " . $e->getMessage() . "<br/>";
-        die();
-    }
-                echo $actor;
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $sql = 'SELECT * FROM actors
+                WHERE first_name LIKE :fname
+                AND last_name LIKE :lname ORDER by film_count DESC';
 
-     return $actor;
+            // prepare statement for execution
+            $q = $pdo->prepare($sql);
+
+            // pass values to the query and execute it
+            $q->execute([':fname' => 'K%', ':lname' => 'B%']);
+            $q->setFetchMode(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                die("Could not connect to the database $dbname :" . $e->getMessage());
+            }
+    echo $actor;
+    return $actor;
 }
+
+
+function twoDegrees()
+{
+
+    global $dbh;
+    if (!isset($_SESSION['actorName'])) {
+        echo "actor name session not set";
+    }
+
+    $pieces = explode(" ", $_SESSION['actorName']);
+
+//    $sql2 = "SELECT DISTINCT  bothPresent.first_name, bothPresent.last_name
+//            FROM bothPresent LEFT JOIN tmp
+//            ON bothPresent.first_name  AND  tmp.first_name
+//            AND bothPresent.last_name AND tmp.last_name
+//            WHERE tmp.first_name IS NULL AND tmp.last_name IS NULL
+//            AND bothPresent.first_name=? and bothPresent.last_name =?";
+
+    $sql = "SELECT name, year
+            FROM movies mov
+            JOIN roles rol ON mov.id = rol.movie_id
+            JOIN actors act ON rol.actor_id = act.id
+            JOIN roles rol2 ON mov.id = rol2.movie_id
+            JOIN actors act2 ON rol2.actor_id = act2.id
+              WHERE
+            act.first_name = ? AND act.last_name = ?
+            AND act2.first_name = 'Kevin' AND act2.last_name = 'Bacon'
+            ORDER BY year DESC";
+
+    $data = array($pieces[0], $pieces[1]);
+    if(!$stmt = $dbh->prepare($sql)){
+        echo "error in prepare";
+    }
+
+    //$stmt->bind_param("ss",$pieces[0],$pieces[1]);
+    $stmt->execute($data);
+
+//    $firstName = "";
+//    $lastName = "";
+//
+//    $stmt->bind_results($firstName,$lastName);
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $index = 0;
+
+    if($result == null) {
+        echo "<tr><td class=\"index\">";
+        echo $index + 1 . "</td>";
+        echo "<td class=\"FirstName\">";
+        echo $pieces[0] . "</td>";
+        echo "<td class=\"LastName\">";
+        echo $pieces[1];
+        echo "</td></tr>";
+    }
+
+
+}
+
 //Commented for now. Uncomment later once you implement logic to check if we need
 //to fire this query.
 //$testForNull = "SELECT id

@@ -1,16 +1,17 @@
 <?php
-
-    echo $_POST['selection'];
-    if(isset($_POST['selection'])) {
-        switch($_POST['selection']):
+    //echo $_GET['selection'];
+    session_start();
+    if(isset($_GET['selection'])) {
+        switch($_GET['selection']):
             case '1deg':
-                $name = $_POST['fname'];
-                echo $name;
-                session_start();
+                $name = $_GET['fname'];
+                //echo $name;
                 $_SESSION['actorName'] = $name;
                 header('Location:PHP/1degree.php');
                 break;
             case '2deg':
+                $name = $_GET['fname'];
+                $_SESSION['actorName'] = $name;
                 header('Location:PHP/2degree.php');
                 break;
             case '1gen':
