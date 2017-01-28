@@ -6,9 +6,9 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:host=localhost;dbname=project1';
+$dsn = 'mysql:host=localhost:3306;dbname=GIS';
 $user = 'root'; //Insert your username in here when testing.
-$pass = ''; //Insert your password in here when testing.
+$pass = 'password';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
 
 function baconId(){
@@ -73,8 +73,6 @@ function printMovies($sqlQuery) {
 function q4(){
         global $dbh; //this is how we refer to our global $dbh up top.
      $pieces = explode(" ", $_SESSION['actorName']);
-     echo $pieces[0] .="\n";
-     echo $pieces[1] .= "\n";
      $sql = "SELECT * FROM actors WHERE actors.last_name = ? AND actors.first_name = ?))";
      $actor= "filler\n";
      try {
