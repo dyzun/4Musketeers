@@ -107,12 +107,23 @@ function twoDegrees()
 
     $pieces = explode(" ", $_SESSION['actorName']);
 
-    $sql = "SELECT DISTINCT  tmp.first_name, tmp.last_name
-            FROM tmp LEFT JOIN bothPresent
-            ON tmp.first_name  AND  bothPresent.first_name
-            AND tmp.last_name AND bothPresent.last_name
-            WHERE bothPresent.first_name IS NULL AND bothPresent.last_name IS NULL
-            AND tmp.first_name=? and tmp.last_name =?";
+//    $sql2 = "SELECT DISTINCT  bothPresent.first_name, bothPresent.last_name
+//            FROM bothPresent LEFT JOIN tmp
+//            ON bothPresent.first_name  AND  tmp.first_name
+//            AND bothPresent.last_name AND tmp.last_name
+//            WHERE tmp.first_name IS NULL AND tmp.last_name IS NULL
+//            AND bothPresent.first_name=? and bothPresent.last_name =?";
+
+    $sql = "SELECT name, year
+            FROM movies mov
+            JOIN roles rol ON mov.id = rol.movie_id
+            JOIN actors act ON rol.actor_id = act.id
+            JOIN roles rol2 ON mov.id = rol2.movie_id
+            JOIN actors act2 ON rol2.actor_id = act2.id
+              WHERE
+            act.first_name = ? AND act.last_name = ?
+            AND act2.first_name = 'Kevin' AND act2.last_name = 'Bacon'
+            ORDER BY year DESC";
 
     $data = array($pieces[0], $pieces[1]);
     if(!$stmt = $dbh->prepare($sql)){
@@ -130,13 +141,16 @@ function twoDegrees()
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $index = 0;
-    echo "<tr><td class=\"index\">";
-    echo $index + 1 . "</td>";
-    echo "<td class=\"FirstName\">";
-    echo $result['first_name'] . "</td>";
-    echo "<td class=\"LastName\">";
-    echo $result['last_name'];
-    echo "</td></tr>";
+
+    if($result == null) {
+        echo "<tr><td class=\"index\">";
+        echo $index + 1 . "</td>";
+        echo "<td class=\"FirstName\">";
+        echo $pieces[0] . "</td>";
+        echo "<td class=\"LastName\">";
+        echo $pieces[1];
+        echo "</td></tr>";
+    }
 
 
 }
