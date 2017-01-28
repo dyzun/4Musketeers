@@ -24,11 +24,22 @@
             </tr>
             <?php
                 include ("common.php");
+                $baconid = baconId();//Bacon's id pulled from the table for use in queries
 
                 //creating out sql query.
+                $sql1 = "CREATE TABLE bothPresent {"
+                        . "SELECT DISTINCT actor_id, first_name, last_name FROM role r6"
+                        . "INNER JOIN {SELECT movie_id FROM roles r4 INNER JOIN{ SELECT r1.actor_id FROM roles r1 INNER JOIN"
+                        . "{SELECT movie_id FROM roles WHERE actor_id WHERE id =".$baconid."} r2 ON r2.movie_id=r1.movie_id} r3 ON r4.actor_id=r3.actor_id}"
+                        . "r5 on r6.movie_id=r5.movie_id INNER JOIN actors act ON r6.actor_id =id AND act.id !=".$baconid.");";
                 
-                $baconid = baconId();//Bacon's id pulled from the table for use in queries
+                $sql2 = "CREATE TABLE tmp { SELECT DISTINCT a.id,a.first_name,a.last_name FROM actors a, roles r1"
+                        . "INNER JOIN { SELECT movie_id FROM roles WHERE actor_id =".$baconid."}r2 ON r2.movie_id=r1.movie_id WHERE a.id =".$baconid.");";
                 
+                $sql3 = "SELECT DISTINCT tmp.first_name, tmp.last_name"
+                        . "FROM tmp LEFT JOIN bothPresent ON tmp.first_name AND bothPresent.first_name"
+                        . "AND tmp.last_name AND bothPresnet.last_name WHERE bothPresent.first_name IS NULL AND bothPresent.last_name IS NULL"
+                        . "AND tmp.first_name ='Xander' AND tmp.last_name ='Berkeley';";// will replace the last line with tmp.id =".$q4 
                 //printDirectors($sql);
             ?>
         </table>
