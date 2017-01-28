@@ -6,10 +6,12 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:host=localhost:3306;dbname=GIS';
+$dsn = 'mysql:host=localhost:3306;dbname=mydb';
 $user = 'root'; //Insert your username in here when testing.
-$pass = 'password';//Insert your password in here when testing.
+$pass = 'Jaljap2732!';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
+
+session_start();
 
 function baconId(){
     $baconsql = "SELECT id FROM actors WHERE first_name='Kevin' AND last_name='Bacon'";
@@ -93,7 +95,52 @@ function q4(){
     echo $actor;
     return $actor;
 }
-  
+
+
+function twoDegrees()
+{
+
+    global $dbh;
+    if (!isset($_SESSION['actorName'])) {
+        echo "actor name session not set";
+    }
+
+    $pieces = explode(" ", $_SESSION['actorName']);
+
+    $sql = "SELECT DISTINCT  tmp.first_name, tmp.last_name
+            FROM tmp LEFT JOIN bothPresent
+            ON tmp.first_name  AND  bothPresent.first_name
+            AND tmp.last_name AND bothPresent.last_name
+            WHERE bothPresent.first_name IS NULL AND bothPresent.last_name IS NULL
+            AND tmp.first_name=? and tmp.last_name =?";
+
+    $data = array($pieces[0], $pieces[1]);
+    if(!$stmt = $dbh->prepare($sql)){
+        echo "error in prepare";
+    }
+
+    //$stmt->bind_param("ss",$pieces[0],$pieces[1]);
+    $stmt->execute($data);
+
+//    $firstName = "";
+//    $lastName = "";
+//
+//    $stmt->bind_results($firstName,$lastName);
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $index = 0;
+    echo "<tr><td class=\"index\">";
+    echo $index + 1 . "</td>";
+    echo "<td class=\"FirstName\">";
+    echo $result['first_name'] . "</td>";
+    echo "<td class=\"LastName\">";
+    echo $result['last_name'];
+    echo "</td></tr>";
+
+
+}
+
 //Commented for now. Uncomment later once you implement logic to check if we need
 //to fire this query.
 //$testForNull = "SELECT id

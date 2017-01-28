@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,13 +27,14 @@
                 <td class="LastName">Last Name</td>
             </tr>
             <?php
+
                 include ("common.php");
 
                 //creating out sql query.
                 
                 $baconid = baconId();//Bacon's id pulled from the table for use in queries
                 
-                //printDirectors($sql);
+                twoDegrees();
             ?>
         </table>
 

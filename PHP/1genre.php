@@ -1,6 +1,7 @@
 <?php
  
 try {
+    session_start();
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
  
     # query

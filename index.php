@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <!DOCTYPE html>
@@ -6,7 +9,7 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <form method="post" action="MiddleMan.php">
+        <form method="GET" action="MiddleMan.php">
                 Name: <input type="text" name="fname" value="name"><br>
                 1 degree: <input type="radio" name="selection" value="1deg"> | 2 degrees: <input type="radio" name="selection" value="2deg"> |
                 Directors/Actors: <input type="radio" name="selection" value="directors">
