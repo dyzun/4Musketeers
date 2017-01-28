@@ -1,14 +1,45 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: michaelkovalsky
- * Date: 1/18/17
- * Time: 7:15 PM
- */
-
-//select MG.genre, count(*) from movies_genres MG group by MG.genre HAVING COUNT(mg.movie_id) =
-//    (SELECT COUNT(mg1.movie_id) totalCount
-//                 FROM movies_genres mg1
-//                 GROUP BY mg1.genre
-//                 ORDER BY totalCOunt
-//                 DESC LIMIT 1);
+ 
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+ 
+    # query
+    $sql = 'SELECT MG.genre, count(*) FROM movies_genres ';
+    $sql .= 'MG group BY MG.genre HAVING COUNT(mg.movie_id) =';
+    $sql .= '(SELECT COUNT(mg1.movie_id) totalCount FROM movies_genres mg1 ';
+    $sql .= 'GROUP BY mg1.genre ORDER BY totalCount DESC LIMIT 1);';
+ 
+    $q = $pdo->query($sql);
+    $q->setFetchMode(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Could not connect to the database $dbname :" . $e->getMessage());
+}
+?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>1genre test</title>
+    </head>
+    <body>
+        <div id="container">
+            <h1>genre1.php test</h1>
+            <h1>Actors</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Genre</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($row = $q->fetch()): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($row['genre']); ?></td>
+                            <td><?php echo htmlspecialchars($row['count(*)']); ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
