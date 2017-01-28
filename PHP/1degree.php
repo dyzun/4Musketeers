@@ -40,15 +40,15 @@
                 $baconid = baconId();//Bacon's id pulled from the table for use in queries
 
                 $pieces = explode(" ", $_SESSION['actorName']);
-                
+       
                 $test= q4($_SESSION['actorName']);
                 echo $test;
-                /*$sql = "SELECT DISTINCT movies.name FROM movies WHERE movies.id in";
+                $sql = "SELECT DISTINCT movies.name FROM movies WHERE movies.id in";
                 $sql .= "(Select roles.movie_id from roles where roles.actor_id = ";
                 $sql .= "(SELECT actors.id FROM actors WHERE actors.last_name = '$pieces[1]' AND actors.first_name = '$pieces[0]'))";
-                $sql .= " AND movies.id in (select roles.movie_id from roles WHERE roles.actor_id ="+$baconid+")";
+                $sql .= " AND movies.id in (select roles.movie_id from roles WHERE roles.actor_id = '.$baconid.')";
 
-                printMovies($sql);*/
+                printMovies($sql);
             ?>
 </table>
 
