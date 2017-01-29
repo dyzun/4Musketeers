@@ -109,53 +109,35 @@ function twoDegrees()
         echo "actor name session not set";
     }
 
-    $pieces = explode(" ", $_SESSION['actorName']);
+    $query = "Select actors.first_name,actors.last_name from actors where actors.id in (SELECT actors.id FROM actors   "
+            . "WHERE actors.id in(Select roles.actor_id from roles where roles.movie_id in"
+            . "(  select roles.movie_id from roles where roles.actor_id in(  "
+            . "Select roles.actor_id from roles where roles.movie_id in  "
+            . "(select roles.movie_id from roles WHERE roles.actor_id = 22591))))) "
+            . "and actors.id not in "
+            . "(SELECT actors.id FROM actors   "
+            . "WHERE actors.id in(Select roles.actor_id from roles where roles.movie_id in  "
+            . "(select roles.movie_id from roles WHERE roles.actor_id = 22591)))";
 
-//    $sql2 = "SELECT DISTINCT  bothPresent.first_name, bothPresent.last_name
-//            FROM bothPresent LEFT JOIN tmp
-//            ON bothPresent.first_name  AND  tmp.first_name
-//            AND bothPresent.last_name AND tmp.last_name
-//            WHERE tmp.first_name IS NULL AND tmp.last_name IS NULL
-//            AND bothPresent.first_name=? and bothPresent.last_name =?";
 
-    $sql = "SELECT name, year
-            FROM movies mov
-            JOIN roles rol ON mov.id = rol.movie_id
-            JOIN actors act ON rol.actor_id = act.id
-            JOIN roles rol2 ON mov.id = rol2.movie_id
-            JOIN actors act2 ON rol2.actor_id = act2.id
-              WHERE
-            act.first_name = ? AND act.last_name = ?
-            AND act2.first_name = 'Kevin' AND act2.last_name = 'Bacon'
-            ORDER BY year DESC";
+$index = 0; //Counting index for our table
 
-    $data = array($pieces[0], $pieces[1]);
-    if(!$stmt = $dbh->prepare($sql)){
-        echo "error in prepare";
+    try {
+        foreach ($dbh->query($query) as $result) {
+            echo "<tr><td class=\"index\">";
+            echo $index + 1 . "</td>";
+            echo "<td class=\"FirstName\">";
+            echo $result['first_name'] . "</td>";
+            echo "<td class=\"LastName\">";
+            echo $result['last_name'];
+            echo "</td></tr>";
+            $index++;
+        }
+        $dbh = null; //terminate connection to database.
+    } catch (PDOException $e) {
+        print  "Error!: " . $e->getMessage() . "<br/>";
+        die();
     }
-
-    //$stmt->bind_param("ss",$pieces[0],$pieces[1]);
-    $stmt->execute($data);
-
-//    $firstName = "";
-//    $lastName = "";
-//
-//    $stmt->bind_results($firstName,$lastName);
-
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    $index = 0;
-
-    if($result == null) {
-        echo "<tr><td class=\"index\">";
-        echo $index + 1 . "</td>";
-        echo "<td class=\"FirstName\">";
-        echo $pieces[0] . "</td>";
-        echo "<td class=\"LastName\">";
-        echo $pieces[1];
-        echo "</td></tr>";
-    }
-
 
 }
 
