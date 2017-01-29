@@ -6,9 +6,9 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:host=localhost:3306;dbname=mydb';
+$dsn = 'mysql:host=localhost:3306;dbname=project1';
 $user = 'root'; //Insert your username in here when testing.
-$pass = 'Jaljap2732!';//Insert your password in here when testing.
+$pass = '';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
 
 session_start();
@@ -61,6 +61,8 @@ function printMovies($sqlQuery) {
             echo $index + 1 . "</td>";
             echo "<td class=\"movie\">";
             echo $result['name'] . "</td>";
+            echo "<td class=\"year\">";
+            echo $result['year'] . "</td>";
             echo "</td></tr>";
             $index++;
         }
@@ -75,7 +77,9 @@ function printMovies($sqlQuery) {
 function q4(){
      global $dbh; //this is how we refer to our global $dbh up top.
      $pieces = explode(" ", $_SESSION['actorName']);
-     $sql = "SELECT id FROM actors WHERE actors.last_name = ? AND actors.first_name = ?))";
+     echo $pieces[0] .="\n";
+     echo $pieces[1] .= "\n";
+     $sql = "SELECT * FROM actors WHERE actors.last_name = ? AND actors.first_name = ?))";
      $actor= "filler\n";
      try {
             $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

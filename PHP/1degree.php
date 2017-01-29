@@ -25,14 +25,15 @@
         session_start();
     ?>
 <body>
-
+    <div id="frame">
     <div id="directors">
         <h1>Movies featuring Kevin Bacon and <?php echo $_SESSION['actorName']; ?> </h1>
 
         <table class="table table-bordered table-condensed">
             <tr>
-                <td class="index">#</td>
-                <td class="movie">Movie</td>
+                <th class="index">#</th>
+                <th class="movie">Movie</th>
+                <th class="year">Year</th>
             </tr>
             <?php
 
@@ -43,18 +44,17 @@
 
                 //$test= q4();
 
-                $sql = "SELECT DISTINCT movies.name FROM movies WHERE movies.id in";
-
+                $sql = "SELECT DISTINCT movies.name, movies.year FROM movies WHERE movies.id in";
                 $sql .= "(Select roles.movie_id from roles where roles.actor_id = ";
                 $sql .= "(SELECT actors.id FROM actors WHERE actors.last_name = '$pieces[1]' AND actors.first_name = '$pieces[0]'))";
                 $sql .= " AND movies.id in (select roles.movie_id from roles WHERE roles.actor_id = '$baconid')";
-
+                $sql .= "Order By year DESC;";
                 printMovies($sql);
             ?>
 </table>
 
 </div>
-
+    </div>
 </body>
 
 </html>

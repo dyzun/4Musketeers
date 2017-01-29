@@ -9,6 +9,7 @@ session_start();
         <meta charset="UTF-8">
     </head>
     <body>
+           <div id="frame">
         <form method="GET" action="MiddleMan.php">
                 Name: <input type="text" name="fname" value="name"><br>
                 1 degree: <input type="radio" name="selection" value="1deg"> | 2 degrees: <input type="radio" name="selection" value="2deg"> |
@@ -24,6 +25,7 @@ session_start();
                 <br>
             <input type="submit" value="Submit">
         </form>
+           </div>
     </body>
 </html>
 
