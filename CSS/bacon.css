@@ -8,16 +8,7 @@ body {
        width: 90%;
        background-color: white;
        margin: 0 auto;
-       padding: 0%;
-}
-
-#main h1,p {
-      text-align: center;
-}
-
-#text{
-	text-align:center;	
-
+       padding: 2%;
 }
 
 table {
@@ -26,8 +17,7 @@ table {
 	border:solid;
 	border-width:1px;
 	border-color:#dad9d4;
-	margin-left:auto;
-	margin-right:auto;
+	margin: auto;
 }
 
 tr:nth-child(even) {
@@ -44,14 +34,12 @@ th{
     font-weight: bold;
 }
 
-.title{
-	margin:1em;
-	width:90%;
+h1{
 	text-align:center;	
 }
 
 form {
-	width:24em;
+        text-align: center;
 	margin-left:auto;
 	margin-right:auto;	
 }

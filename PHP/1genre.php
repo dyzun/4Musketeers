@@ -21,26 +21,27 @@ try {
 <html>
     <head>
         <title>1genre test</title>
+        <!--bootstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!--CSS File Link-->
+        <link href="../CSS/bacon.css" type="text/css" rel="stylesheet /">
     </head>
     <body>
         <div id="frame">
         <div id="container">
-            <h1>Actors</h1>
+            <h1>Top Genres</h1>
             <table>
-                <thead>
-                    <tr>
+                   <tr>
                         <th>Genre</th>
                         <th>Count</th>
                     </tr>
-                </thead>
-                <tbody>
                     <?php while ($row = $q->fetch()): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($row['genre']); ?></td>
                             <td><?php echo htmlspecialchars($row['count(*)']); ?></td>
                         </tr>
                     <?php endwhile; ?>
-                </tbody>
             </table>
         </div>
         </div>

@@ -11,7 +11,7 @@ $user = 'root'; //Insert your username in here when testing.
 $pass = '';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
 
-session_start();
+
 
 function baconId(){
     $baconsql = "SELECT id FROM actors WHERE first_name='Kevin' AND last_name='Bacon'";

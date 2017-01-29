@@ -42,8 +42,6 @@
 
                 $pieces = explode(" ", $_SESSION['actorName']);
 
-                //$test= q4();
-
                 $sql = "SELECT DISTINCT movies.name, movies.year FROM movies WHERE movies.id in";
                 $sql .= "(Select roles.movie_id from roles where roles.actor_id = ";
                 $sql .= "(SELECT actors.id FROM actors WHERE actors.last_name = '$pieces[1]' AND actors.first_name = '$pieces[0]'))";
@@ -53,7 +51,7 @@
             ?>
 </table>
 
-</div>
+    </div>
     </div>
 </body>
 
