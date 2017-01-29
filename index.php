@@ -16,10 +16,25 @@ session_start();
                 | Top genres: <input type="radio" name="selection" value="1gen"> | Top actor by genre:
                   <select name="selection" form="searchForm" value="2gen">
                       <option selected disabled>Choose genre</option>
-                      <option value="Thriller">Thriller</option>
-                      <option value="Comedy">Comedy</option>
                       <option value="Action">Action</option>
-                      <option value="Romantic">Romantic</option>
+                      <option value="Adventure">Adventure</option>
+                      <option value="Animation">Animation</option>
+                      <option value="Comedy">Comedy</option>
+                      <option value="Crime">Crime</option>
+                      <option value="Documentary">Documentary</option>
+                      <option value="Drama">Drama</option>
+                      <option value="Family">Family</option>
+                      <option value="Fantasy">Fantasy</option>
+                      <option value="Horror">Horror</option>
+                      <option value="Music">Music</option>
+                      <option value="Musical">Musical</option>
+                      <option value="Mystery">Mystery</option>
+                      <option value="Romance">Romance</option>
+                      <option value="Sci-Fi">Sci-Fi</option>
+                      <option value="Short">Short</option>
+                      <option value="Thriller">Thriller</option>
+                      <option value="War">War</option>
+                      <option value="Western">Western</option>
                   </select>
                 <br>
             <input type="submit" value="Submit">
