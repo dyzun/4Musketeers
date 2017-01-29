@@ -108,17 +108,17 @@ function twoDegrees()
     if (!isset($_SESSION['actorName'])) {
         echo "actor name session not set";
     }
+    $baconId = baconId();
 
     $query = "Select actors.first_name,actors.last_name from actors where actors.id in (SELECT actors.id FROM actors   "
             . "WHERE actors.id in(Select roles.actor_id from roles where roles.movie_id in"
             . "(  select roles.movie_id from roles where roles.actor_id in(  "
             . "Select roles.actor_id from roles where roles.movie_id in  "
-            . "(select roles.movie_id from roles WHERE roles.actor_id = 22591))))) "
+            . "(select roles.movie_id from roles WHERE roles.actor_id = ".$baconId."))))) "
             . "and actors.id not in "
             . "(SELECT actors.id FROM actors   "
             . "WHERE actors.id in(Select roles.actor_id from roles where roles.movie_id in  "
-            . "(select roles.movie_id from roles WHERE roles.actor_id = 22591)))";
-
+            . "(select roles.movie_id from roles WHERE roles.actor_id = ".$baconId.")))";
 
 $index = 0; //Counting index for our table
 
