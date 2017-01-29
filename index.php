@@ -13,8 +13,9 @@ session_start();
                 Name: <input type="text" name="fname" value="name"><br>
                 1 degree: <input type="radio" name="selection" value="1deg"> | 2 degrees: <input type="radio" name="selection" value="2deg"> |
                 Directors/Actors: <input type="radio" name="selection" value="directors">
-                | Top genres: <input type="radio" name="selection" value="1gen"> | Top actor by genre:
-                  <select name="selection" form="searchForm" value="2gen">
+                | Top genres: <input type="radio" name="selection" value="1gen">
+                | Top actor by genre: <input type="radio" name="selection" value="2gen">
+                  <select name="genres"  value="2gen">
                       <option selected disabled>Choose genre</option>
                       <option value="Action">Action</option>
                       <option value="Adventure">Adventure</option>
