@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,15 +16,15 @@
     </head>
 
 <body>
-
+    <div id="frame">
     <div id="directors">
         <h1>Actors Who Directed</h1>
 
         <table class="table table-bordered table-condensed">
             <tr>
-                <td class="index">#</td>
-                <td class="FirstName">First Name</td>
-                <td class="LastName">Last Name</td>
+                <th class="index">#</th>
+                <th class="FirstName">First Name</th>
+                <th class="LastName">Last Name</th>
             </tr>
             <?php
                 include ("common.php");
@@ -36,7 +40,8 @@
         </table>
 
     </div>
-
+    </div>
+    
 </body>
 
 </html>

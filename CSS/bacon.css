@@ -40,6 +40,10 @@ tr:nth-child(odd) {
     background-color: #ffffff;
 }
 
+th{
+    font-weight: bold;
+}
+
 .title{
 	margin:1em;
 	width:90%;
