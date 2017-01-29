@@ -6,10 +6,12 @@
  * Time: 7:16 PM
  */
 
-$dsn = 'mysql:host=localhost:3306;dbname=GIS';
+$dsn = 'mysql:host=localhost:3306;dbname=project1';
 $user = 'root'; //Insert your username in here when testing.
-$pass = 'password';//Insert your password in here when testing.
+$pass = '';//Insert your password in here when testing.
 $dbh = new PDO($dsn, $user, $pass);
+
+session_start();
 
 function baconId(){
     $baconsql = "SELECT id FROM actors WHERE first_name='Kevin' AND last_name='Bacon'";
@@ -59,6 +61,8 @@ function printMovies($sqlQuery) {
             echo $index + 1 . "</td>";
             echo "<td class=\"movie\">";
             echo $result['name'] . "</td>";
+            echo "<td class=\"year\">";
+            echo $result['year'] . "</td>";
             echo "</td></tr>";
             $index++;
         }
@@ -71,41 +75,72 @@ function printMovies($sqlQuery) {
 
 //q4 use for search queries
 function q4(){
-        global $dbh; //this is how we refer to our global $dbh up top.
+     global $dbh; //this is how we refer to our global $dbh up top.
      $pieces = explode(" ", $_SESSION['actorName']);
+     echo $pieces[0] .="\n";
+     echo $pieces[1] .= "\n";
      $sql = "SELECT * FROM actors WHERE actors.last_name = ? AND actors.first_name = ?))";
      $actor= "filler\n";
      try {
-         $stm = $dbh->prepare($sql);
-         $stm ->execute(array($pieces[1],$pieces[0]));
-         $s=$stm->fetchColumn();
-         
-         $actor = $s;  
-         echo $actor;
-        if($stm == false)//or  if(!$results)  or  if(count($results)==0)  or if($results == array())
-        {
-            $rest = substr($pieces[0], 0,1);
-            echo $rest;
-            $sql = "SELECT id FROM actors WHERE actors.last_name = ? AND actors.first_name LIKE %? Order by film_count DESC"; 
-            $stm = $dbh->prepare($sql);
-            $stm ->execute(array($pieces[1],$rest));
-            $res = $stm->fetchColumn();//ERROR should assign id to $actor
-            $actor = $res;
-            echo $actor;
-            echo "inner loop";
-        }else{
-            echo $actor;
-            echo "outerloop";
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $sql = 'SELECT * FROM actors
+                WHERE first_name LIKE :fname
+                AND last_name LIKE :lname ORDER by film_count DESC';
+
+            // prepare statement for execution
+            $q = $pdo->prepare($sql);
+
+            // pass values to the query and execute it
+            $q->execute([':fname' => 'K%', ':lname' => 'B%']);
+            $q->setFetchMode(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                die("Could not connect to the database $dbname :" . $e->getMessage());
             }
+    echo $actor;
+    return $actor;
+}
+
+
+function twoDegrees()
+{
+
+    global $dbh;
+    if (!isset($_SESSION['actorName'])) {
+        echo "actor name session not set";
+    }
+
+    $query = "Select actors.first_name,actors.last_name from actors where actors.id in (SELECT actors.id FROM actors   "
+            . "WHERE actors.id in(Select roles.actor_id from roles where roles.movie_id in"
+            . "(  select roles.movie_id from roles where roles.actor_id in(  "
+            . "Select roles.actor_id from roles where roles.movie_id in  "
+            . "(select roles.movie_id from roles WHERE roles.actor_id = 22591))))) "
+            . "and actors.id not in "
+            . "(SELECT actors.id FROM actors   "
+            . "WHERE actors.id in(Select roles.actor_id from roles where roles.movie_id in  "
+            . "(select roles.movie_id from roles WHERE roles.actor_id = 22591)))";
+
+
+$index = 0; //Counting index for our table
+
+    try {
+        foreach ($dbh->query($query) as $result) {
+            echo "<tr><td class=\"index\">";
+            echo $index + 1 . "</td>";
+            echo "<td class=\"FirstName\">";
+            echo $result['first_name'] . "</td>";
+            echo "<td class=\"LastName\">";
+            echo $result['last_name'];
+            echo "</td></tr>";
+            $index++;
+        }
         $dbh = null; //terminate connection to database.
     } catch (PDOException $e) {
         print  "Error!: " . $e->getMessage() . "<br/>";
         die();
     }
-                echo $actor;
 
-     return $actor;
 }
+
 //Commented for now. Uncomment later once you implement logic to check if we need
 //to fire this query.
 //$testForNull = "SELECT id
