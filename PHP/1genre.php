@@ -2,7 +2,8 @@
  
 try {
     session_start();
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    include ("common.php");
+    //$pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
  
     # query
     $sql = 'SELECT MG.genre, count(*) FROM movies_genres ';
@@ -10,10 +11,10 @@ try {
     $sql .= '(SELECT COUNT(mg1.movie_id) totalCount FROM movies_genres mg1 ';
     $sql .= 'GROUP BY mg1.genre ORDER BY totalCount DESC LIMIT 1);';
  
-    $q = $pdo->query($sql);
+    $q = $dbh->query($sql);
     $q->setFetchMode(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    die("Could not connect to the database $dbname :" . $e->getMessage());
+    die("Could not connect to the database  :" . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>
@@ -23,7 +24,6 @@ try {
     </head>
     <body>
         <div id="container">
-            <h1>genre1.php test</h1>
             <h1>Actors</h1>
             <table>
                 <thead>
