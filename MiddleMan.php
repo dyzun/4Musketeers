@@ -18,7 +18,13 @@
                 header('Location:PHP/1genre.php');
                 break;
             case '2gen':
-                header('Location:PHP/2genre.php');
+                if(isset($_GET['genres'])) {
+                    $genre = $_GET['genres'];
+                    $_SESSION['genre'] = $genre;
+                    header('Location:PHP/2genre.php');
+                } else {
+                    echo "genres not set";
+                }
                 break;
             case 'directors';
                 header('Location:PHP/directors.php');
